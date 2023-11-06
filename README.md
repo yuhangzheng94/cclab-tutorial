@@ -72,7 +72,7 @@ pop();
 ```
 Demo: 
 
-![](/images/demo_1_1.mp4)
+![image](images/demo_1_1.gif)
 
 
 Code available here: https://editor.p5js.org/ztothey2dah/sketches/xsLD3Csyq
