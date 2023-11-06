@@ -8,6 +8,12 @@ Upon completion of this tutorials, students will:
 - Be able to decouple "appearance" (what we draw on the canvas) and "essence" (the underlying variables that control it) and understand why we use both `update()` and `display()` methods in a class, and
 - Develop problem-solving mindset.
 
+## Table of Contents
+- [Step 1: Create a single-level game](#Step-1-Create-a-single-level-game)
+  - [1.1 Create a sketch with bouncing balls](#11-create-a-sketch-with-bouncing-balls)
+  - [1.2 Add mouse interaction so that it disappears upon click](#12-add-mouse-interaction-so-that-it-disappears-upon-click)
+- [Step 2: ]
+
 ## Step 1: Create a single-level game
 This step is built on [LA Jason's tutorial on OOP](https://github.com/LuHC409/Tutorial/tree/main/LATutor#oop) in Week 9.
 ### 1.1 Create a sketch with bouncing balls.
@@ -70,13 +76,11 @@ fill(0);
 text(`# of Balls: ${balls.length}`, 0, 25);
 pop();
 ```
-Demo: 
+We get something like this:
 
 ![image](images/demo_1_1.gif)
 
-
 Code available here: https://editor.p5js.org/ztothey2dah/sketches/xsLD3Csyq
-
 
 ### 1.2 Add mouse interaction so that it disappears upon click.
 
