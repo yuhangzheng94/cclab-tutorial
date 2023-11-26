@@ -9,15 +9,16 @@ Upon completion of this tutorials, students will:
 - Develop problem-solving mindset.
 
 ## Table of Contents
-- [Motivation](#motivation)
+<!-- - [Motivation](#motivation)
 - [Objectives](#objectives)
-- [Table of Contents](#table-of-contents)
+- [Table of Contents](#table-of-contents) -->
 - [Step 1: Create a single-level game](#step-1-create-a-single-level-game)
   - [1.1 Create a sketch with bouncing balls.](#11-create-a-sketch-with-bouncing-balls)
   - [1.2 Add mouse interaction so that it disappears upon click.](#12-add-mouse-interaction-so-that-it-disappears-upon-click)
 - [Step 2: Insert "Start" and "Congratulations" pages](#step-2-insert-start-and-congratulations-pages)
 - [Step 3: Extend the game to multiple levels!](#step-3-extend-the-game-to-multiple-levels)
 - [Step 4 (advanced): Add `timer` and `life` to the game](#step-4-advanced-add-timer-and-life-to-the-game)
+- [The Final Piece](#the-final-piece)
 
 ## Step 1: Create a single-level game
 This step is built on [LA Jason's tutorial on OOP](https://github.com/LuHC409/Tutorial/tree/main/LATutor#oop) in Week 9.
@@ -224,7 +225,55 @@ You can try the the tutorial here: https://editor.p5js.org/ztothey2dah/sketches/
 
 ## Step 3: Extend the game to multiple levels!
 
-Now that we have a nice program structure `start page --> game --> congrats page`, how do we make it multiple levels? Easy! 
+Now that we have a nice program structure `start page --> game --> congrats page`, how do we make it multiple levels? Easy! If we're not at the final level, instead of going to the congratulations page, we go to the next level. We first declare a global variable:
+
+```js
+let numOfLevels = 3;
+```
+
+The same as in the previous step, `0` for `currentLevel` can represent the start page, and `numOfLevels + 1` can be used to indicate the congrats page. Within the `draw()` loop, we write
+
+```js
+// draw scenes based on the current level
+if (currentLevel == 0) {
+  drawStartPage();
+} else if (currentLevel == numOfLevels + 1) {
+  drawCongratsPage();
+} else {
+  // drawGameLevel();
+  text(`Current Level: ${currentLevel}`, 0, 25);
+  text(`# of Balls Left: ${balls.length}`, 0, 50);
+  for (let ball of balls) {
+    ball.update();
+    ball.display();
+  }
+}
+
+// update levels if certain interaction is triggered
+if (currentLevel == 0) {
+  if (keyIsPressed && key == " ") {
+    currentLevel += 1;
+    startLevel();
+  }
+} else if (currentLevel <= numOfLevels) {
+  if (allClear) {
+    currentLevel += 1;
+    startLevel();
+  }
+}
+```
+
+where we name the `createBalls()` function to `startLevel()`, and add the following lines:
+```js
+function startLevel() {
+  allClear = false;                       // <-- set all clear back to false
+  let numOfBalls = currentLevel * 3;      // <-- set the number of balls for the new level
+  balls = [];                             // <-- explicitly clear the array before creating new balls
+  for (let i = 0; i < numOfBalls; i++) {
+    // omitted
+  }
+}
+```
 
 Demo: 
 
@@ -247,11 +296,51 @@ Let's consider how a timer shall behave in this scenario:
 
 Note that one important thing we (or the program) want to know is `"how long it has been since the timer started"`, and the concept of frames comes in handy. `frameCount` increments by 1 every time the `draw()` loop is executed, and `frameRate` represents the number of loops run in a second.    
 
-Now we translate the set of rules above into code that `p5.js` understands. 
+In function `startLevel()`, we set the duration and record the starting time:
+```js
+timer = 15;
+startFrame = frameCount;
+```
+
+Now we translate the set of rules above into code that `p5.js` understands. Don't forget to reserve a value to represent the defeat page! In my code, I use `currentLevel = numOfLevels + 2`. 
+```js
+// draw scenes based on the current level
+if (currentLevel == 0) {
+  drawStartPage();
+} else if (currentLevel == numOfLevels + 1) {
+  drawCongratsPage();
+} else if (currentLevel == numOfLevels + 2) {
+  drawGameOverPage();                                // <-- new
+} else {
+  // omitted
+}
+
+// update levels if certain interaction is triggered
+if (currentLevel == 0) {
+  // omitted
+} else if (currentLevel <= numOfLevels) {
+  if (allClear) {
+    currentLevel += 1;
+    startLevel();
+  }
+
+  if (timer > 0) {
+    timer = max(0, timer - 1 / getFrameRate());   // <-- decrement the timer by 1/frameRate every frame/draw() loop
+  }
+
+  if (timer == 0) {
+    currentLevel = numOfLevels + 2;              // representing the state 'game over'
+  }
+}
+```
+
 As an exercise, try to add another global variable, `life`, so that one only loses the game after failing certain times.
 
+## The Final Piece
 Demo: 
 
-Code is available at https://editor.p5js.org/ztothey2dah/sketches/7xNl_MbNW.
+![](/images/demo_4.gif)
 
-BUT (there’s always a but) don’t let this practice hold back your imagination and creativity! 
+Code is available at https://editor.p5js.org/ztothey2dah/sketches/QvQJJUw3J.
+
+Thank you for reading the tutorial! I hope it helps you better organize your code, BUT (there’s always a but) don’t let this practice hold back your imagination and creativity! 
