@@ -224,7 +224,34 @@ You can try the the tutorial here: https://editor.p5js.org/ztothey2dah/sketches/
 
 ## Step 3: Extend the game to multiple levels!
 
+Now that we have a nice program structure `start page --> game --> congrats page`, how do we make it multiple levels? Easy! 
+
+Demo: 
+
+![](/images/demo_3.gif)
+
+Code is available at https://editor.p5js.org/ztothey2dah/sketches/c-MEKYubd.
+
 
 ## Step 4 (advanced): Add `timer` and `life` to the game
+
+Now that we have extended the game to multiple levels, how do we make it a little more competitive? Let's make a timer for each level!
+
+Let's consider how a timer shall behave in this scenario: 
+
+1. Before a level starts, we set a proper duration for the timer (5 seconds for Level 1, for example).
+2. When a level starts, start the timer; 
+3. During the level, the timer updates the remaining time every frame; 
+4. If the timer counts down to 0 and there are still bouncing balls left, one loses;
+5. If all the balls are eliminated before the timer counts down to 0, go to next level or congratulations page if they have cleared all game levels;
+
+Note that one important thing we (or the program) want to know is `"how long it has been since the timer started"`, and the concept of frames comes in handy. `frameCount` increments by 1 every time the `draw()` loop is executed, and `frameRate` represents the number of loops run in a second.    
+
+Now we translate the set of rules above into code that `p5.js` understands. 
+As an exercise, try to add another global variable, `life`, so that one only loses the game after failing certain times.
+
+Demo: 
+
+Code is available at https://editor.p5js.org/ztothey2dah/sketches/7xNl_MbNW.
 
 BUT (there’s always a but) don’t let this practice hold back your imagination and creativity! 
